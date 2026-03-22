@@ -122,8 +122,8 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - Test HTTP 401 với các loại lỗi token khác nhau
     - _Yêu cầu: 1.3, 3.3, 3.4, 3.5_
 
-- [ ] 8. Triển khai Entry Point và Wiring
-  - [ ] 8.1 Triển khai `src/app.js`
+- [x] 8. Triển khai Entry Point và Wiring
+  - [x] 8.1 Triển khai `src/app.js`
     - Khởi tạo Express app, đăng ký middleware và routes
     - Chọn `RedisTokenStore` khi `NODE_ENV=production`, ngược lại dùng `InMemoryTokenStore`
     - Inject store vào services
