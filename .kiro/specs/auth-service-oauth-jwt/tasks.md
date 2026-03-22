@@ -43,41 +43,41 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - _Yêu cầu: 3.3, 3.4, 6.4_
 
 - [ ] 3. Triển khai Token Store
-  - [ ] 3.1 Triển khai `src/store/memory.token.store.js`
+  - [x] 3.1 Triển khai `src/store/memory.token.store.js`
     - Dùng hai `Map` nội bộ với timestamp để tự expire (không cần Redis)
     - Triển khai đầy đủ interface: `saveRefreshToken`, `getRefreshToken`, `deleteRefreshToken`, `revokeAccessToken`, `isRevoked`
     - _Yêu cầu: 2.2, 4.2, 5.1, 5.2_
 
-  - [ ]* 3.2 Viết property test cho InMemoryTokenStore
+  - [x] 3.2 Viết property test cho InMemoryTokenStore
     - **Property 2: Refresh token lookup** — token vừa lưu phải truy xuất được đúng `userId`
     - **Property 3: Revocation idempotency** — `revokeAccessToken` nhiều lần với cùng `jti` phải luôn khiến `isRevoked` trả về `true`
     - **Validates: Yêu cầu 2.2, 5.1**
 
-  - [ ] 3.3 Triển khai `src/store/redis.token.store.js`
+  - [x] 3.3 Triển khai `src/store/redis.token.store.js`
     - Dùng `ioredis`, key pattern: `refresh:{token}` → `userId`, `revoked:{jti}` → `1`
     - Triển khai đầy đủ interface với TTL tương ứng
     - _Yêu cầu: 2.2, 4.2, 5.1, 5.2_
 
-  - [ ]* 3.4 Viết unit test cho RedisTokenStore (mock ioredis)
+  - [x] 3.4 Viết unit test cho RedisTokenStore (mock ioredis)
     - Test `saveRefreshToken` gọi `SET` với TTL đúng
     - Test `getRefreshToken` trả về `null` khi key không tồn tại
     - Test `isRevoked` trả về `true` sau khi `revokeAccessToken`
     - _Yêu cầu: 2.2, 5.1_
 
-- [ ] 4. Checkpoint — Đảm bảo tất cả tests pass, hỏi người dùng nếu có thắc mắc.
+- [x] 4. Checkpoint — Đảm bảo tất cả tests pass, hỏi người dùng nếu có thắc mắc.
 
-- [ ] 5. Triển khai Token Service
-  - [ ] 5.1 Triển khai `src/services/token.service.js`
+- [x] 5. Triển khai Token Service
+  - [x] 5.1 Triển khai `src/services/token.service.js`
     - `verifyAccessToken(accessToken)`: gọi `jwt.verify`, kiểm tra `isRevoked` — ném `UnauthorizedError` nếu thất bại
     - `refreshTokens(refreshToken)`: tra cứu `userId` từ store, xoay vòng refresh token (xóa cũ, tạo mới), phát hành access token mới
     - `revokeTokens(accessToken)`: thêm `jti` vào revocation list với TTL còn lại, xóa refresh token liên quan
     - _Yêu cầu: 3.1–3.5, 4.1–4.4, 5.1–5.4_
 
-  - [ ]* 5.2 Viết property test cho Token Service
+  - [x] 5.2 Viết property test cho Token Service
     - **Property 4: Refresh token rotation** — sau khi `refreshTokens`, refresh token cũ phải không còn hợp lệ
     - **Validates: Yêu cầu 4.2**
 
-  - [ ]* 5.3 Viết unit test cho Token Service
+  - [x] 5.3 Viết unit test cho Token Service
     - Test `verifyAccessToken` trả về payload khi token hợp lệ
     - Test `verifyAccessToken` ném lỗi khi token bị revoke
     - Test `refreshTokens` ném lỗi khi refresh token không tồn tại trong store
@@ -91,7 +91,7 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - `issueTokens(user)`: gọi `jwt.sign` + `store.saveRefreshToken`, trả về `{ accessToken, refreshToken }`
     - _Yêu cầu: 1.1, 1.2, 1.5, 2.1, 2.2_
 
-  - [ ]* 6.2 Viết unit test cho OAuth Service (mock axios)
+  - [ ] 6.2 Viết unit test cho OAuth Service (mock axios)
     - Test `buildAuthorizationUrl` tạo URL đúng với state
     - Test `exchangeCodeForUser` ném lỗi khi provider trả về lỗi (yêu cầu 1.4)
     - Test `issueTokens` lưu refresh token vào store
