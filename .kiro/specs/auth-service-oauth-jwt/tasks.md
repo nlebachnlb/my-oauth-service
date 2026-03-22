@@ -13,7 +13,7 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - Tạo `package.json` với scripts `start` và `test`
     - _Yêu cầu: 7.1, 7.5_
 
-  - [ ] 1.2 Triển khai module cấu hình `src/config/index.js`
+  - [x] 1.2 Triển khai module cấu hình `src/config/index.js`
     - Tải và validate tất cả biến môi trường bắt buộc: `JWT_PRIVATE_KEY`, `JWT_PUBLIC_KEY`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`
     - Nếu thiếu biến bắt buộc → log lỗi mô tả và `process.exit(1)`
     - Xuất schema cấu hình với giá trị mặc định: `ACCESS_TOKEN_TTL=15m`, `REFRESH_TOKEN_TTL=7d`, `JWT_ISSUER=auth-service`
