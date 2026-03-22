@@ -19,23 +19,23 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - Xuất schema cấu hình với giá trị mặc định: `ACCESS_TOKEN_TTL=15m`, `REFRESH_TOKEN_TTL=7d`, `JWT_ISSUER=auth-service`
     - _Yêu cầu: 7.2, 7.5_
 
-  - [ ]* 1.3 Viết unit test cho module cấu hình
+  - [x] 1.3 Viết unit test cho module cấu hình
     - Kiểm tra thoát khi thiếu biến bắt buộc
     - Kiểm tra giá trị mặc định được áp dụng đúng
     - _Yêu cầu: 7.2, 7.5_
 
 - [ ] 2. Triển khai JWT Utility
-  - [ ] 2.1 Triển khai `src/utils/jwt.util.js`
+  - [x] 2.1 Triển khai `src/utils/jwt.util.js`
     - Hàm `sign(payload, ttl)`: ký RS256, tự động gán `jti` (UUID v4), `iss`, `aud` từ config
     - Hàm `verify(token)`: xác minh chữ ký, thời hạn, issuer — ném `TokenExpiredError` hoặc `JsonWebTokenError`
     - Hàm `decode(token)`: giải mã không xác minh chữ ký, trả về `null` nếu không hợp lệ
     - _Yêu cầu: 2.3, 2.4, 3.1, 6.1, 6.2, 6.4_
 
-  - [ ]* 2.2 Viết property test cho tính chất round-trip của JWT
+  - [x] 2.2 Viết property test cho tính chất round-trip của JWT
     - **Property 1: Round-trip consistency** — với mọi payload hợp lệ `{ sub, email, roles }`, `verify(sign(payload, ttl))` phải trả về payload tương đương bản gốc
     - **Validates: Yêu cầu 6.3**
 
-  - [ ]* 2.3 Viết unit test cho JWT Utility
+  - [x] 2.3 Viết unit test cho JWT Utility
     - Test `verify` ném lỗi khi token hết hạn
     - Test `verify` ném lỗi khi chữ ký sai
     - Test `decode` trả về `null` với chuỗi không hợp lệ
