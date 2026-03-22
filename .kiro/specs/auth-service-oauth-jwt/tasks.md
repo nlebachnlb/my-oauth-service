@@ -84,39 +84,39 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - Test `revokeTokens` ném lỗi khi access token không hợp lệ
     - _Yêu cầu: 3.3, 3.4, 3.5, 4.3, 4.4, 5.4_
 
-- [ ] 6. Triển khai OAuth Service
-  - [ ] 6.1 Triển khai `src/services/oauth.service.js`
+- [x] 6. Triển khai OAuth Service
+  - [x] 6.1 Triển khai `src/services/oauth.service.js`
     - `buildAuthorizationUrl(provider)`: tạo URL ủy quyền và state ngẫu nhiên cho Google/GitHub
     - `exchangeCodeForUser(provider, code)`: dùng `axios` trao đổi code lấy `{ id, email, name }` từ provider
     - `issueTokens(user)`: gọi `jwt.sign` + `store.saveRefreshToken`, trả về `{ accessToken, refreshToken }`
     - _Yêu cầu: 1.1, 1.2, 1.5, 2.1, 2.2_
 
-  - [ ] 6.2 Viết unit test cho OAuth Service (mock axios)
+  - [x] 6.2 Viết unit test cho OAuth Service (mock axios)
     - Test `buildAuthorizationUrl` tạo URL đúng với state
     - Test `exchangeCodeForUser` ném lỗi khi provider trả về lỗi (yêu cầu 1.4)
     - Test `issueTokens` lưu refresh token vào store
     - _Yêu cầu: 1.4, 2.1, 2.2_
 
-- [ ] 7. Triển khai Controllers và Routes
-  - [ ] 7.1 Triển khai `src/controllers/oauth.controller.js`
+- [x] 7. Triển khai Controllers và Routes
+  - [x] 7.1 Triển khai `src/controllers/oauth.controller.js`
     - `GET /auth/:provider`: validate provider, gọi `buildAuthorizationUrl`, lưu state vào session, redirect
     - `GET /auth/:provider/callback`: so sánh state, gọi `exchangeCodeForUser` + `issueTokens`, trả về token
     - Trả về HTTP 400 nếu state không khớp, HTTP 502 nếu provider lỗi
     - _Yêu cầu: 1.1, 1.2, 1.3, 1.4_
 
-  - [ ] 7.2 Triển khai `src/controllers/token.controller.js`
+  - [x] 7.2 Triển khai `src/controllers/token.controller.js`
     - `POST /token/verify`: đọc `accessToken` từ body, gọi `verifyAccessToken`, trả về payload hoặc lỗi 401
     - `POST /token/refresh`: đọc `refreshToken` từ body, gọi `refreshTokens`, trả về token pair mới
     - `POST /token/revoke`: đọc access token từ `Authorization: Bearer`, gọi `revokeTokens`, trả về 200
     - _Yêu cầu: 3.1–3.5, 4.1–4.4, 5.1–5.4_
 
-  - [ ] 7.3 Triển khai `src/routes/index.js` và `src/middleware/error.middleware.js`
+  - [x] 7.3 Triển khai `src/routes/index.js` và `src/middleware/error.middleware.js`
     - Đăng ký tất cả routes vào Express router
     - Error middleware xử lý tập trung: map lỗi → HTTP status + error code theo bảng thiết kế
     - Làm sạch input người dùng trước khi log
     - _Yêu cầu: 7.4_
 
-  - [ ]* 7.4 Viết unit test cho controllers (mock services)
+  - [x] 7.4 Viết unit test cho controllers (mock services)
     - Test redirect đúng URL với state
     - Test HTTP 400 khi state không khớp
     - Test HTTP 401 với các loại lỗi token khác nhau
