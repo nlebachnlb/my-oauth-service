@@ -6,7 +6,7 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
 
 ## Tasks
 
-- [ ] 1. Khởi tạo cấu trúc dự án và cấu hình
+- [x] 1. Khởi tạo cấu trúc dự án và cấu hình
   - [x] 1.1 Tạo cấu trúc thư mục và cài đặt dependencies
     - Tạo các thư mục: `src/config`, `src/controllers`, `src/services`, `src/utils`, `src/store`, `src/middleware`, `src/routes`
     - Cài đặt dependencies: `express`, `jsonwebtoken`, `uuid`, `ioredis`, `axios`, `ms`
@@ -24,7 +24,7 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - Kiểm tra giá trị mặc định được áp dụng đúng
     - _Yêu cầu: 7.2, 7.5_
 
-- [ ] 2. Triển khai JWT Utility
+- [x] 2. Triển khai JWT Utility
   - [x] 2.1 Triển khai `src/utils/jwt.util.js`
     - Hàm `sign(payload, ttl)`: ký RS256, tự động gán `jti` (UUID v4), `iss`, `aud` từ config
     - Hàm `verify(token)`: xác minh chữ ký, thời hạn, issuer — ném `TokenExpiredError` hoặc `JsonWebTokenError`
@@ -42,7 +42,7 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - Test `sign` luôn tạo `jti` duy nhất
     - _Yêu cầu: 3.3, 3.4, 6.4_
 
-- [ ] 3. Triển khai Token Store
+- [x] 3. Triển khai Token Store
   - [x] 3.1 Triển khai `src/store/memory.token.store.js`
     - Dùng hai `Map` nội bộ với timestamp để tự expire (không cần Redis)
     - Triển khai đầy đủ interface: `saveRefreshToken`, `getRefreshToken`, `deleteRefreshToken`, `revokeAccessToken`, `isRevoked`
@@ -136,6 +136,8 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - _Yêu cầu: 1.1–1.5, 2.1–2.4, 4.1–4.4, 5.1–5.4_
 
 - [x] 9. Checkpoint cuối — Đảm bảo tất cả tests pass, hỏi người dùng nếu có thắc mắc.
+
+- [x] 10. Tạo API doc cho service, hướng dẫn sử dụng
 
 ## Ghi Chú
 
