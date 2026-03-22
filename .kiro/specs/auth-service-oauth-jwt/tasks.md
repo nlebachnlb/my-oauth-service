@@ -129,13 +129,13 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - Inject store vào services
     - _Yêu cầu: 7.1, 7.2_
 
-  - [ ]* 8.2 Viết integration test cho luồng OAuth end-to-end (mock OAuth provider)
+  - [x] 8.2 Viết integration test cho luồng OAuth end-to-end (mock OAuth provider)
     - Test luồng đầy đủ: redirect → callback → nhận token
     - Test luồng refresh: dùng refresh token lấy access token mới
     - Test luồng revoke: đăng xuất và xác minh token bị từ chối
     - _Yêu cầu: 1.1–1.5, 2.1–2.4, 4.1–4.4, 5.1–5.4_
 
-- [ ] 9. Checkpoint cuối — Đảm bảo tất cả tests pass, hỏi người dùng nếu có thắc mắc.
+- [x] 9. Checkpoint cuối — Đảm bảo tất cả tests pass, hỏi người dùng nếu có thắc mắc.
 
 ## Ghi Chú
 

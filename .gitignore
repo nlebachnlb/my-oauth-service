@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Environment variables — KHÔNG BAO GIỜ commit file này
+.env
+.env.local
+.env.*.local
+
+# JWT Keys (nếu lưu dưới dạng file riêng)
+*.pem
+*.key
+
+# Test coverage
+coverage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
