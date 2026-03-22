@@ -4,6 +4,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const session = require('express-session');
 const config = require('./config');
 const { InMemoryTokenStore } = require('./store/memory.token.store');
 const { RedisTokenStore } = require('./store/redis.token.store');
@@ -34,12 +35,13 @@ const app = express();
 // Middleware: parse JSON body
 app.use(express.json());
 
-// Middleware: session đơn giản (in-memory, dùng cho OAuth state)
-// Không dùng express-session để tránh thêm dependency
-app.use((req, _res, next) => {
-  if (!req.session) req.session = {};
-  next();
-});
+// Middleware: session (dùng để lưu OAuth state giữa redirect và callback)
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'dev-secret-change-in-production',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: process.env.NODE_ENV === 'production' },
+}));
 
 // Routes
 app.use('/', createRouter(oauthController, tokenController));
