@@ -6,8 +6,6 @@ const REQUIRED = [
   'JWT_PUBLIC_KEY',
   'GOOGLE_CLIENT_ID',
   'GOOGLE_CLIENT_SECRET',
-  'GITHUB_CLIENT_ID',
-  'GITHUB_CLIENT_SECRET',
 ];
 
 // Validate biến môi trường bắt buộc khi khởi động
