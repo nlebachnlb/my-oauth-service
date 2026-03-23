@@ -1,0 +1,32 @@
+services:
+  # Service 1: Redis — dùng image official, bản alpine cho nhẹ
+  redis:
+    image: redis:7-alpine
+    # Restart tự động nếu container crash
+    restart: unless-stopped
+    # Health check: kiểm tra Redis có sẵn sàng nhận kết nối chưa
+    # auth-service sẽ chờ Redis healthy trước khi khởi động
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Service 2: auth-service — build từ Dockerfile ở thư mục hiện tại
+  auth-service:
+    build: .
+    ports:
+      # Map port 3000 của container ra port 3000 của máy host
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      # "redis" ở đây là tên service bên trên — Docker tự resolve DNS nội bộ
+      - REDIS_URL=redis://redis:6379
+    # Load các env vars còn lại từ file .env (JWT keys, OAuth secrets)
+    env_file:
+      - .env
+    # Chỉ khởi động sau khi Redis healthy
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped

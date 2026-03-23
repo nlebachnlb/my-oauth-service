@@ -139,6 +139,29 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
 
 - [x] 10. Tạo API doc cho service, hướng dẫn sử dụng
 
+- [-] 11. Setup Redis cho môi trường Production
+  - [x] 11.1 Tạo `docker-compose.yml` cho local production simulation
+    - Định nghĩa service `auth-service` và `redis:7-alpine`
+    - Mount env file, expose port 3000
+    - Đặt `NODE_ENV=production` để kích hoạt `RedisTokenStore`
+    - Health check cho Redis trước khi service khởi động
+
+  - [x] 11.2 Tạo `Dockerfile` cho auth-service
+    - Multi-stage build: `node:20-alpine` base
+    - Copy chỉ các file cần thiết (không copy `node_modules`, `.env`)
+    - Run as non-root user
+    - Expose port 3000
+
+  - [ ] 11.3 Cập nhật `src/store/redis.token.store.js` cho production-ready
+    - Thêm xử lý reconnect và error event từ ioredis
+    - Log lỗi kết nối Redis mà không crash service
+    - Hỗ trợ `REDIS_URL` với TLS (rediss://) cho managed Redis
+
+  - [ ] 11.4 Tạo hướng dẫn deploy lên Railway / Fly.io
+    - Cấu hình env vars bắt buộc qua platform UI
+    - Thêm Redis add-on và lấy `REDIS_URL`
+    - Hướng dẫn generate RS256 key pair bằng `scripts/generate-keys.js`
+
 ## Ghi Chú
 
 - Tasks đánh dấu `*` là tùy chọn, có thể bỏ qua để triển khai MVP nhanh hơn
