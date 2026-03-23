@@ -139,7 +139,7 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
 
 - [x] 10. Tạo API doc cho service, hướng dẫn sử dụng
 
-- [-] 11. Setup Redis cho môi trường Production
+- [x] 11. Setup Redis cho môi trường Production
   - [x] 11.1 Tạo `docker-compose.yml` cho local production simulation
     - Định nghĩa service `auth-service` và `redis:7-alpine`
     - Mount env file, expose port 3000
@@ -157,10 +157,13 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - Log lỗi kết nối Redis mà không crash service
     - Hỗ trợ `REDIS_URL` với TLS (rediss://) cho managed Redis
 
-  - [ ] 11.4 Tạo hướng dẫn deploy lên Railway / Fly.io
-    - Cấu hình env vars bắt buộc qua platform UI
-    - Thêm Redis add-on và lấy `REDIS_URL`
-    - Hướng dẫn generate RS256 key pair bằng `scripts/generate-keys.js`
+  - [x] 11.4 Deploy lên Railway
+    - Tạo Web Application OAuth client đúng loại trên Google Cloud Console
+    - Config `GOOGLE_CALLBACK_URL` với domain Railway
+    - Thêm Redis service và link `REDIS_URL` vào auth-service
+    - Fix session store dùng `connect-redis@7` với `ioredis`
+    - Fix `trust proxy` và `sameSite=none` cho cookie production
+    - Fix `req.session.save()` trước khi redirect để persist state vào Redis
 
 ## Ghi Chú
 
