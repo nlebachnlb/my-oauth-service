@@ -152,7 +152,7 @@ Triển khai dịch vụ xác thực Node.js/Express hỗ trợ OAuth 2.0 (Googl
     - Run as non-root user
     - Expose port 3000
 
-  - [ ] 11.3 Cập nhật `src/store/redis.token.store.js` cho production-ready
+  - [x] 11.3 Cập nhật `src/store/redis.token.store.js` cho production-ready
     - Thêm xử lý reconnect và error event từ ioredis
     - Log lỗi kết nối Redis mà không crash service
     - Hỗ trợ `REDIS_URL` với TLS (rediss://) cho managed Redis

@@ -10,10 +10,29 @@ const Redis = require('ioredis');
  */
 class RedisTokenStore {
   /**
-   * @param {string} redisUrl - Redis connection URL, e.g. 'redis://localhost:6379'
+   * @param {string} redisUrl - Redis connection URL
+   *   Local:   redis://localhost:6379
+   *   TLS:     rediss://user:pass@host:6380  (managed Redis như Railway, Upstash)
    */
   constructor(redisUrl) {
-    this._client = new Redis(redisUrl);
+    this._client = new Redis(redisUrl, {
+      // ioredis tự reconnect theo exponential backoff, tối đa 10 lần
+      maxRetriesPerRequest: 3,
+      enableReadyCheck: true,
+    });
+
+    // Lắng nghe error event để log — KHÔNG để unhandled, tránh crash process
+    this._client.on('error', (err) => {
+      console.error('[RedisTokenStore] connection error:', err.message);
+    });
+
+    this._client.on('reconnecting', () => {
+      console.warn('[RedisTokenStore] reconnecting to Redis...');
+    });
+
+    this._client.on('ready', () => {
+      console.info('[RedisTokenStore] connected to Redis');
+    });
   }
 
   /**
