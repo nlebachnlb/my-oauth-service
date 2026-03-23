@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const express = require('express');
 const session = require('express-session');
-const { RedisStore } = require('connect-redis');
+const connectRedis = require('connect-redis');
 const Redis = require('ioredis');
 const config = require('./config');
 const { InMemoryTokenStore } = require('./store/memory.token.store');
@@ -43,9 +43,14 @@ app.use(express.json());
 // Chọn session store theo NODE_ENV
 // Production: Redis (tránh memory leak, hoạt động đúng khi scale nhiều instance)
 // Dev/test: MemoryStore mặc định (không cần Redis)
+// connect-redis@7 cần được khởi tạo với session trước khi dùng
+const RedisStore = connectRedis(session);
 const sessionStore = process.env.NODE_ENV === 'production'
-  ? new RedisStore({ client: new Redis(config.redis.url) })
-  : undefined; // undefined = dùng MemoryStore mặc định của express-session
+  ? new RedisStore({
+    client: new Redis(config.redis.url),
+    disableTouch: true,
+  })
+  : undefined;
 
 // Middleware: session (dùng để lưu OAuth state giữa redirect và callback)
 app.use(session({
