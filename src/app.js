@@ -5,6 +5,8 @@ require('dotenv').config();
 
 const express = require('express');
 const session = require('express-session');
+const { RedisStore } = require('connect-redis');
+const Redis = require('ioredis');
 const config = require('./config');
 const { InMemoryTokenStore } = require('./store/memory.token.store');
 const { RedisTokenStore } = require('./store/redis.token.store');
@@ -32,11 +34,22 @@ const tokenController = createTokenController(tokenService);
 // Khởi tạo Express app
 const app = express();
 
+// Trust Railway/proxy reverse proxy — cần thiết để cookie secure hoạt động đúng sau load balancer
+app.set('trust proxy', 1);
+
 // Middleware: parse JSON body
 app.use(express.json());
 
+// Chọn session store theo NODE_ENV
+// Production: Redis (tránh memory leak, hoạt động đúng khi scale nhiều instance)
+// Dev/test: MemoryStore mặc định (không cần Redis)
+const sessionStore = process.env.NODE_ENV === 'production'
+  ? new RedisStore({ client: new Redis(config.redis.url) })
+  : undefined; // undefined = dùng MemoryStore mặc định của express-session
+
 // Middleware: session (dùng để lưu OAuth state giữa redirect và callback)
 app.use(session({
+  store: sessionStore,
   secret: process.env.SESSION_SECRET || 'dev-secret-change-in-production',
   resave: false,
   saveUninitialized: false,
