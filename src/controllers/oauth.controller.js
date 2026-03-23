@@ -30,6 +30,7 @@ function createOAuthController(oauthService) {
 
     const { url, state } = result;
     req.session.oauthState = state;
+    console.log('[oauth] initiateAuth sessionID:', req.sessionID, 'state:', state);
     return res.redirect(url);
   }
 
@@ -48,6 +49,7 @@ function createOAuthController(oauthService) {
     }
 
     const { state, code } = req.query;
+    console.log('[oauth] handleCallback sessionID:', req.sessionID, 'state from query:', state, 'state in session:', req.session.oauthState);
 
     if (state !== req.session.oauthState) {
       const err = new Error('State parameter mismatch');
