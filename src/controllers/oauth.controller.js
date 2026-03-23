@@ -31,7 +31,11 @@ function createOAuthController(oauthService) {
     const { url, state } = result;
     req.session.oauthState = state;
     console.log('[oauth] initiateAuth sessionID:', req.sessionID, 'state:', state);
-    return res.redirect(url);
+    // Save session explicitly trước khi redirect — đảm bảo state được persist vào Redis
+    req.session.save((err) => {
+      if (err) return next(err);
+      return res.redirect(url);
+    });
   }
 
   /**
