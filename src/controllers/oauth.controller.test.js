@@ -19,7 +19,7 @@ function makeReq(overrides = {}) {
   return {
     params: {},
     query: {},
-    session: {},
+    session: { save: jest.fn((cb) => cb(null)) },
     ...overrides,
   };
 }

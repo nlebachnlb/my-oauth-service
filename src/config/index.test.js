@@ -11,8 +11,6 @@ const FULL_ENV = {
   JWT_PUBLIC_KEY: 'fake-public-key',
   GOOGLE_CLIENT_ID: 'google-client-id',
   GOOGLE_CLIENT_SECRET: 'google-client-secret',
-  GITHUB_CLIENT_ID: 'github-client-id',
-  GITHUB_CLIENT_SECRET: 'github-client-secret',
 };
 
 // Lưu lại process.env gốc và mock process.exit
@@ -62,8 +60,6 @@ describe('Thoát khi thiếu biến môi trường bắt buộc', () => {
     'JWT_PUBLIC_KEY',
     'GOOGLE_CLIENT_ID',
     'GOOGLE_CLIENT_SECRET',
-    'GITHUB_CLIENT_ID',
-    'GITHUB_CLIENT_SECRET',
   ];
 
   test.each(requiredVars)(
@@ -186,9 +182,4 @@ describe('Giá trị bắt buộc được load đúng vào config', () => {
     expect(config.providers.google.clientId).toBe(FULL_ENV.GOOGLE_CLIENT_ID);
   });
 
-  test('providers.github.clientId lấy từ GITHUB_CLIENT_ID', () => {
-    setEnv();
-    const config = loadConfig();
-    expect(config.providers.github.clientId).toBe(FULL_ENV.GITHUB_CLIENT_ID);
-  });
 });

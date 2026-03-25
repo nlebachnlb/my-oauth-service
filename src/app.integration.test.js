@@ -67,7 +67,7 @@ function buildApp() {
   const tokenController = createTokenController(tokenService);
 
   // sessionStore dùng chung để test có thể inject state
-  const sessionStore = {};
+  const sessionStore = { save: (cb) => cb(null) };
 
   const app = express();
   app.use(express.json());

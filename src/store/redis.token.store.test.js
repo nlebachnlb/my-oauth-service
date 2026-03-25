@@ -16,6 +16,7 @@ describe('RedisTokenStore', () => {
       set: jest.fn().mockResolvedValue('OK'),
       get: jest.fn().mockResolvedValue(null),
       del: jest.fn().mockResolvedValue(1),
+      on: jest.fn(),
     };
 
     // Mock constructor Redis trả về mockClient
